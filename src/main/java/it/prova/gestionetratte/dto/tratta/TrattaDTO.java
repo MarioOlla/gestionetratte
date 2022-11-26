@@ -29,7 +29,7 @@ public class TrattaDTO {
 	private LocalTime oraDecollo;
 	@NotNull(message = "{oraAtterraggio.notnull}")
 	private LocalTime oraAtterraggio;
-	@NotNull(message = "{stato.notnull}")
+
 	private Stato stato;
 	@JsonIgnoreProperties(value = { "tratte" })
 	private AirbusDTO airbus;
