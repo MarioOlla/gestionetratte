@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.airbus.AirbusRepository;
+import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 
 @Service
 @Transactional
@@ -49,6 +50,8 @@ public class AirbusServiceImpl implements AirbusService {
 
 	@Override
 	public void rimuovi(Long id) {
+		if(repository.findById(id)==null)
+			throw new AirbusNotFoundException("Non è stato trovato nessun Airbus con id:"+id);
 		repository.deleteById(id);
 
 	}

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
+import it.prova.gestionetratte.web.api.exception.TrattaNotFoundException;
 
 @Service
 @Transactional
@@ -53,6 +54,8 @@ public class TrattaServiceImpl implements TrattaService {
 
 	@Override
 	public void rimuovi(Long id) {
+		if(repository.findById(id)==null)
+			throw new TrattaNotFoundException("Non è stata trovata nessuna Tratta con id:"+id);
 		repository.deleteById(id);
 	}
 
