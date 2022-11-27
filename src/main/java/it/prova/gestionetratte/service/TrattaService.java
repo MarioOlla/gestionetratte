@@ -13,9 +13,9 @@ public interface TrattaService {
 
 	public List<Tratta> findByExample(Tratta example);
 
-	public void inserisciNuovo(Tratta input);
+	public Tratta inserisciNuovo(Tratta input);
 
-	public void update(Tratta input);
+	public Tratta update(Tratta input);
 
 	public void rimuovi(Long id);
 	

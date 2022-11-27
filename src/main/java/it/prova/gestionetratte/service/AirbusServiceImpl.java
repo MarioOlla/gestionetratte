@@ -8,64 +8,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionetratte.model.Airbus;
 import it.prova.gestionetratte.repository.airbus.AirbusRepository;
-import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 
 @Service
 @Transactional
 public class AirbusServiceImpl implements AirbusService {
-	
+
 	@Autowired
 	private AirbusRepository repository;
-	
-	@Autowired
-	private TrattaRepository trattaRepository;
-	
+
 	@Override
 	public List<Airbus> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Airbus>) repository.findAll();
 	}
 
 	@Override
 	public Airbus findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id).orElse(null);
 	}
 
 	@Override
 	public Airbus findByIdEager(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByIdEager(id);
 	}
 
 	@Override
 	public List<Airbus> findByExample(Airbus example) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByExample(example);
 	}
 
 	@Override
-	public void inserisciNuovo(Airbus input) {
-		// TODO Auto-generated method stub
-
+	public Airbus inserisciNuovo(Airbus input) {
+		return repository.save(input);
 	}
 
 	@Override
-	public void update(Airbus input) {
-		// TODO Auto-generated method stub
+	public Airbus update(Airbus input) {
+		return repository.save(input);
 
 	}
 
 	@Override
 	public void rimuovi(Long id) {
-		// TODO Auto-generated method stub
+		repository.deleteById(id);
 
-	}
-
-	@Override
-	public List<Airbus> listAllConSovrapposizioni() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

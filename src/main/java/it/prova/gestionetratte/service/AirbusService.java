@@ -14,12 +14,10 @@ public interface AirbusService {
 	
 	public List<Airbus> findByExample(Airbus example);
 	
-	public void inserisciNuovo(Airbus input);
+	public Airbus inserisciNuovo(Airbus input);
 	
-	public void update(Airbus input);
+	public Airbus update(Airbus input);
 	
 	public void rimuovi(Long id);
-	
-	public List<Airbus> listAllConSovrapposizioni();
 	
 }

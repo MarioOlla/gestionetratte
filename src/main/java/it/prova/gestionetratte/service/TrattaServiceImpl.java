@@ -1,11 +1,15 @@
 package it.prova.gestionetratte.service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.repository.tratta.TrattaRepository;
 
@@ -18,14 +22,12 @@ public class TrattaServiceImpl implements TrattaService {
 	
 	@Override
 	public List<Tratta> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Tratta>) repository.findAll();
 	}
 
 	@Override
 	public Tratta findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -36,32 +38,37 @@ public class TrattaServiceImpl implements TrattaService {
 
 	@Override
 	public List<Tratta> findByExample(Tratta example) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByExample(example);
 	}
 
 	@Override
-	public void inserisciNuovo(Tratta input) {
-		// TODO Auto-generated method stub
-
+	public Tratta inserisciNuovo(Tratta input) {
+		return repository.save(input);
 	}
 
 	@Override
-	public void update(Tratta input) {
-		// TODO Auto-generated method stub
-
+	public Tratta update(Tratta input) {
+		return repository.save(input);
 	}
 
 	@Override
 	public void rimuovi(Long id) {
-		// TODO Auto-generated method stub
-
+		repository.deleteById(id);
 	}
 
 	@Override
 	public void concludiTratte() {
-		// TODO Auto-generated method stub
-
+		List<Tratta> daChiudere = new ArrayList<>();
+		List<Tratta> tutte = (List<Tratta>) repository.findAll();
+		tutte.stream().forEach(tratta ->{
+			if(tratta.getStato().equals(Stato.ATTIVA) 
+					&& (tratta.getOraAtterraggio().isBefore(LocalTime.now()) 
+							&& !tratta.getData().isAfter(LocalDate.now()))) {
+				tratta.setStato(Stato.CONCLUSA);
+				daChiudere.add(tratta);
+			}
+		});
+		repository.saveAll(daChiudere);
 	}
 
 }
