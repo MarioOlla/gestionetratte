@@ -1,7 +1,6 @@
 package it.prova.gestionetratte.dto.airbus;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +35,7 @@ public class AirbusDTO {
 	private Boolean conSovrapposizioni;
 
 	@JsonIgnoreProperties(value = { "airbus" })
-	private List<TrattaDTO> tratte = new ArrayList<>();
+	private List<TrattaDTO> tratte ;
 	
 	public Long getId() {
 		return id;
@@ -109,8 +108,9 @@ public class AirbusDTO {
 				.descrizione(model.getDescrizione())
 				.dataInizioServizio(model.getDataInizioServizio())
 				.numeroPasseggeri(model.getNumeroPasseggeri());
-		if(includeTratte)
+		if(includeTratte) {
 			builder.tratte(TrattaDTO.buildTrattaDTOListFromModelList( model.getTratte(),false));
+		}
 		return builder.build();
 	}
 	
@@ -130,14 +130,14 @@ public class AirbusDTO {
 	public static List<Airbus> buildAirbusModelListFromDTOList(List<AirbusDTO> listaDTO,boolean includeTratte){
 		return listaDTO
 				.stream()
-				.map(listItem -> listItem.buildAirbusModel(includeTratte))
+				.map(listItem -> listItem.buildAirbusModel(true))
 				.collect(Collectors.toList());
 	}
 	
 	public static List<AirbusDTO> buildAirbusDTOListFromModelList(List<Airbus> models,boolean includeTratte){
 		return models
 				.stream()
-				.map(airbus -> AirbusDTO.buildAirbusDTOFromModel(airbus,includeTratte))
+				.map(airbus -> AirbusDTO.buildAirbusDTOFromModel(airbus,true))
 				.collect(Collectors.toList());
 	}
  }

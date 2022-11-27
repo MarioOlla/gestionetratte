@@ -23,7 +23,7 @@ public class TrattaServiceImpl implements TrattaService {
 	
 	@Override
 	public List<Tratta> listAll() {
-		return (List<Tratta>) repository.findAll();
+		return (List<Tratta>) repository.listAllEager();
 	}
 
 	@Override
@@ -33,8 +33,7 @@ public class TrattaServiceImpl implements TrattaService {
 
 	@Override
 	public Tratta findByIdEager(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByIdEager(id);
 	}
 
 	@Override

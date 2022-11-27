@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.prova.gestionetratte.dto.tratta.TrattaDTO;
+import it.prova.gestionetratte.model.Stato;
 import it.prova.gestionetratte.model.Tratta;
 import it.prova.gestionetratte.service.TrattaService;
 import it.prova.gestionetratte.web.api.exception.AirbusNotFoundException;
 import it.prova.gestionetratte.web.api.exception.IdNotNullForInsertionException;
+import it.prova.gestionetratte.web.api.exception.TrattaNonAnnullataBeforeDeleteException;
 
 @RestController
 @RequestMapping("api/tratta")
@@ -49,8 +51,8 @@ public class TrattaController {
 	public TrattaDTO insertNew(@Valid@RequestBody TrattaDTO input) {
 		if(input.getId() != null)
 			throw new IdNotNullForInsertionException("L'elemento da inserire non deve avere il campo id valorizzato.");
-		Tratta nuovaTratta = trattaService.inserisciNuovo(input.buildTrattaModel(false));
-		return TrattaDTO.buildTrattaDTOFromModel(nuovaTratta, false);
+		Tratta nuovaTratta = trattaService.inserisciNuovo(input.buildTrattaModel(true));
+		return TrattaDTO.buildTrattaDTOFromModel(nuovaTratta, true);
 	}
 	
 	@PutMapping("/{id}")
@@ -68,6 +70,9 @@ public class TrattaController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
+		Tratta toDelete = trattaService.findById(id);
+		if(toDelete.getStato()!=Stato.ANNULLATA)
+			throw new TrattaNonAnnullataBeforeDeleteException("You cannot delete a Tratta in a state different from ANNULLATA.");
 		trattaService.rimuovi(id);
 	}
 	

@@ -31,6 +31,7 @@ public class TrattaDTO {
 	private LocalTime oraAtterraggio;
 
 	private Stato stato;
+	@NotNull(message = "{airbus.notnull}")
 	@JsonIgnoreProperties(value = { "tratte" })
 	private AirbusDTO airbus;
 	
@@ -127,13 +128,13 @@ public class TrattaDTO {
 	
 	public static List<Tratta> buildTrattaModelListFromDTOList(List<TrattaDTO> dtos , boolean includeAirbus){
 		return dtos.stream()
-				.map(item -> item.buildTrattaModel(includeAirbus))
+				.map(item -> {return item.buildTrattaModel(includeAirbus);})
 				.collect(Collectors.toList());
 	}
 	
 	public static List<TrattaDTO> buildTrattaDTOListFromModelList(List<Tratta> models , boolean includeAirbus){
 		return models.stream()
-				.map(item -> TrattaDTO.buildTrattaDTOFromModel(item, includeAirbus))
+				.map(item -> {return TrattaDTO.buildTrattaDTOFromModel(item, includeAirbus);})
 				.collect(Collectors.toList());
 	}
 }
