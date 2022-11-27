@@ -21,6 +21,11 @@ public class AirbusServiceImpl implements AirbusService {
 	public List<Airbus> listAll() {
 		return (List<Airbus>) repository.findAll();
 	}
+	
+	@Override
+	public List<Airbus> listAllEager() {
+		return (List<Airbus>) repository.listAllEager();
+	}
 
 	@Override
 	public Airbus findById(Long id) {

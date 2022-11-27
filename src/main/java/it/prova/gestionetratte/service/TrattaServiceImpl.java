@@ -60,7 +60,7 @@ public class TrattaServiceImpl implements TrattaService {
 	}
 
 	@Override
-	public void concludiTratte() {
+	public List<Tratta> concludiTratte() {
 		List<Tratta> daChiudere = new ArrayList<>();
 		List<Tratta> tutte = (List<Tratta>) repository.findAll();
 		tutte.stream().forEach(tratta ->{
@@ -72,6 +72,7 @@ public class TrattaServiceImpl implements TrattaService {
 			}
 		});
 		repository.saveAll(daChiudere);
+		return tutte;
 	}
 
 }

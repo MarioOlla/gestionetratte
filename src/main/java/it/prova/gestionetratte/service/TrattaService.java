@@ -19,6 +19,6 @@ public interface TrattaService {
 
 	public void rimuovi(Long id);
 	
-	public void concludiTratte();
+	public List<Tratta> concludiTratte();
 	 
 }

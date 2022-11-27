@@ -43,6 +43,11 @@ public class AirbusDTOBuilder {
 		return this;
 	}
 	
+	public AirbusDTOBuilder conSovrapposizioni() {
+		this.dto.setConSovrapposizioni(true);
+		return this;
+	}
+	
 	public AirbusDTO build() {
 		return this.dto;
 	}

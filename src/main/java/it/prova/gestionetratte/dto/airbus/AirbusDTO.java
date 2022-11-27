@@ -32,6 +32,8 @@ public class AirbusDTO {
 	@NotNull(message = "{numeroPasseggeri.notnull}")
 	@Min(1)
 	private Integer numeroPasseggeri;
+	
+	private Boolean conSovrapposizioni;
 
 	@JsonIgnoreProperties(value = { "airbus" })
 	private List<TrattaDTO> tratte = new ArrayList<>();
@@ -75,6 +77,14 @@ public class AirbusDTO {
 	public void setNumeroPasseggeri(Integer numeroPasseggeri) {
 		this.numeroPasseggeri = numeroPasseggeri;
 	}
+	
+	public Boolean getConSovrapposizioni() {
+		return conSovrapposizioni;
+	}
+
+	public void setConSovrapposizioni(Boolean conSovrapposizioni) {
+		this.conSovrapposizioni = conSovrapposizioni;
+	}
 
 	public List<TrattaDTO> getTratte() {
 		return tratte;
@@ -102,6 +112,19 @@ public class AirbusDTO {
 		if(includeTratte)
 			builder.tratte(TrattaDTO.buildTrattaDTOListFromModelList( model.getTratte(),false));
 		return builder.build();
+	}
+	
+	public static AirbusDTO buildAirbusDTOFromModelConSovrapposizioni(Airbus model,boolean includeTratte) {
+		AirbusDTOBuilder builder = new AirbusDTOBuilder()
+				.id(model.getId())
+				.codice(model.getCodice())
+				.descrizione(model.getDescrizione())
+				.dataInizioServizio(model.getDataInizioServizio())
+				.numeroPasseggeri(model.getNumeroPasseggeri());
+		if(includeTratte)
+			builder.tratte(TrattaDTO.buildTrattaDTOListFromModelList( model.getTratte(),false));
+
+		return builder.conSovrapposizioni().build();
 	}
 	
 	public static List<Airbus> buildAirbusModelListFromDTOList(List<AirbusDTO> listaDTO,boolean includeTratte){

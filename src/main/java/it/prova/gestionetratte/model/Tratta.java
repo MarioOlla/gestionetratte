@@ -23,17 +23,17 @@ public class Tratta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	@Column(name = "titolo")
+	@Column(name = "codice")
 	private String codice;
-	@Column(name = "titolo")
+	@Column(name = "descrizione")
 	private String descrizione;
-	@Column(name = "titolo")
+	@Column(name = "data")
 	private LocalDate data;
-	@Column(name = "titolo")
+	@Column(name = "oraDecollo")
 	private LocalTime oraDecollo;
-	@Column(name = "titolo")
+	@Column(name = "oraAtterraggio")
 	private LocalTime oraAtterraggio;
-	@Column(name = "sesso")
+	@Column(name = "stato")
 	@Enumerated(EnumType.STRING)
 	private Stato stato;
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -8,6 +8,8 @@ public interface AirbusService {
 	
 	public List<Airbus> listAll();
 	
+	public List<Airbus> listAllEager();
+	
 	public Airbus findById(Long id);
 	
 	public Airbus findByIdEager(Long id);
