@@ -89,10 +89,10 @@ public class AirbusController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable(required = true) Long id) {
 		Airbus toDelete = airbusService.findByIdEager(id);
-		
-		if(toDelete.getTratte()!=null && !toDelete.getTratte().isEmpty() )
+
+		if (toDelete.getTratte() != null && !toDelete.getTratte().isEmpty())
 			throw new StillHasLinkedTratteException("Cannot delete, there are still tratte linked to this Airbus.");
-		
+
 		airbusService.rimuovi(id);
 	}
 
@@ -114,7 +114,6 @@ public class AirbusController {
 	// verificata la funzione
 	// restituisce false.
 	private boolean hasSovrapposizioni(Airbus airbus) {
-		System.out.println("entro in hasSovrapposizioni");
 		List<Tratta> tratte = airbus.getTratte();
 
 		for (int i = 0; i < tratte.size(); i++) {
@@ -122,17 +121,17 @@ public class AirbusController {
 			for (int j = i; j < tratte.size(); j++) {
 				Tratta tratta2 = tratte.get(j);
 				if (i != j) {
-					if (((tratta1.getOraDecollo().isBefore(tratta2.getOraDecollo()))
-							&& (tratta1.getOraAtterraggio().isAfter(tratta2.getOraDecollo())))
-							|| ((tratta1.getOraDecollo().isBefore(tratta2.getOraAtterraggio()))
-									&& (tratta1.getOraAtterraggio().isAfter(tratta2.getOraAtterraggio())))) {
-						System.out.println("ho trovato un caso incriminato");
-						return true;
+					if (tratta1.getData().equals(tratta2.getData())) {
+						if (((tratta1.getOraDecollo().isBefore(tratta2.getOraDecollo()))
+								&& (tratta1.getOraAtterraggio().isAfter(tratta2.getOraDecollo())))
+								|| ((tratta1.getOraDecollo().isBefore(tratta2.getOraAtterraggio()))
+										&& (tratta1.getOraAtterraggio().isAfter(tratta2.getOraAtterraggio())))) {
+							return true;
+						}
 					}
 				}
 			}
 		}
-		System.out.println("sto uscendo dalla funzione senza aver trovato nulla");
 		return false;
 	}
 
